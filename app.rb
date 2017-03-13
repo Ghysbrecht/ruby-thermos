@@ -1,11 +1,5 @@
 require_relative "thermos.rb"
 
-nest = Thermos.new(20, 1)
-nest.temperature(296)
-nest.get_status
-
-nest.temperature(19)
-nest.get_status
-
-nest.temperature(61)
+nest = Thermos.new(ARGV[0].to_i, ARGV[1].to_i)
+nest.temperature(ARGV[2].to_i)
 nest.get_status
