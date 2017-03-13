@@ -4,13 +4,13 @@ class Thermos
    attr_accessor :target
    attr_accessor :range
 
-   def initialize(target, range)
-       @target = target
+   def initialize(target, range, temperatureUnit)
+       @target = get_celcius(target, temperatureUnit)
        @range = range
    end
 
-   def temperature (temperature)
-       @temperature = temperature
+   def temperature (temperature, temperatureUnit)
+       @temperature = get_celcius(temperature, temperatureUnit)
        reset_leds()
        set_leds()
    end
@@ -40,4 +40,15 @@ class Thermos
        end
    end
 
+   def get_celcius(temperature, temperatureUnit)
+      case temperatureUnit
+      when 'C'
+         temperatureCelsius = temperature
+      when 'F'
+         temperatureCelsius = (temperature - 32)/1.8
+      when 'K'
+         temperatureCelsius = temperature - 273.15
+      end
+      temperatureCelsius
+   end
 end
