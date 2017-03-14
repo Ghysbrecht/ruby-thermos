@@ -15,15 +15,16 @@ class Thermos
    def initialize(target, range)
        @target = get_celcius(target)
        @range = range
-       reset_leds()
+       reset_leds
        @relaisCooler = false;
        @relaisHeater = false;
    end
 
    def set_temperature (temperature)
        @temperature = get_celcius(temperature)
-       reset_leds()
-       set_leds()
+       reset_leds
+       set_leds
+       log_event
    end
 
    def reset_leds
@@ -70,5 +71,19 @@ class Thermos
 
    def get_hex_leds
        "#%06x" % [(@red*65536 + @green*256 + @blue).to_i]
+   end
+
+   def log_message(message)
+       open('log.txt', 'a') do |f|
+         f.puts message
+       end
+   end
+
+   def log_event
+       log_message("-------------------------------------------------------")
+       log_message("Received temperature value: " + @temperature.to_s)
+       log_message("Led value: " + get_hex_leds)
+       log_message("Heater is " + (relaisHeater ? "ON" : "OFF"))
+       log_message("Cooler is " + (relaisCooler ? "ON" : "OFF"))
    end
 end
