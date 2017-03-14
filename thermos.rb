@@ -9,6 +9,7 @@ class Thermos
    attr_reader :blue
    attr_reader :relaisCooler
    attr_reader :relaisHeater
+   attr_reader :temperature
 
 
    def initialize(target, range)
@@ -19,7 +20,7 @@ class Thermos
        @relaisHeater = false;
    end
 
-   def temperature (temperature)
+   def set_temperature (temperature)
        @temperature = get_celcius(temperature)
        reset_leds()
        set_leds()
