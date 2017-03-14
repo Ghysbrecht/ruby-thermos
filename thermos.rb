@@ -7,6 +7,8 @@ class Thermos
    def initialize(target, range)
        @target = get_celcius(target)
        @range = range
+       @relaisCooler = false;
+       @relaisHeater = false;
    end
 
    def temperature (temperature)
@@ -22,6 +24,11 @@ class Thermos
        puts  "Red led:   " + (@red ? "ON" : "OFF")
        puts  "Green led: " + (@green ? "ON" : "OFF")
        puts  "Blue led:  " + (@blue ? "ON" : "OFF")
+       puts "+-------------------------+"
+       puts "|     Relais Status       |"
+       puts "+-------------------------+"
+       puts  "Cooler:   " + (@relaisCooler ? "ON" : "OFF")
+       puts  "Heater:   " + (@relaisHeater ? "ON" : "OFF")
    end
 
    def reset_leds
@@ -33,10 +40,17 @@ class Thermos
    def set_leds
        if(@temperature < (@target - @range))
            @blue = true
+           @relaisHeater = true;
+           @relaisCooler = false;
+
        elsif(@temperature > (@target + @range))
            @red = true
+           @relaisHeater = false;
+           @relaisCooler = true;
        else
            @green = true
+           @relaisHeater = false;
+           @relaisCooler = false;
        end
    end
 
