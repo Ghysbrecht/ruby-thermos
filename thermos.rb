@@ -4,6 +4,13 @@ class Thermos
    attr_accessor :target
    attr_accessor :range
 
+   attr_reader :red
+   attr_reader :green
+   attr_reader :blue
+   attr_reader :relaisCooler
+   attr_reader :relaisHeater
+
+
    def initialize(target, range)
        @target = get_celcius(target)
        @range = range
@@ -15,20 +22,6 @@ class Thermos
        @temperature = get_celcius(temperature)
        reset_leds()
        set_leds()
-   end
-
-   def get_status
-       puts "+-------------------------+"
-       puts "|       Led Status        |"
-       puts "+-------------------------+"
-       puts  "Red led:   " + (@red ? "ON" : "OFF")
-       puts  "Green led: " + (@green ? "ON" : "OFF")
-       puts  "Blue led:  " + (@blue ? "ON" : "OFF")
-       puts "+-------------------------+"
-       puts "|     Relais Status       |"
-       puts "+-------------------------+"
-       puts  "Cooler:   " + (@relaisCooler ? "ON" : "OFF")
-       puts  "Heater:   " + (@relaisHeater ? "ON" : "OFF")
    end
 
    def reset_leds
