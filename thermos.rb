@@ -14,6 +14,7 @@ class Thermos
    def initialize(target, range)
        @target = get_celcius(target)
        @range = range
+       reset_leds()
        @relaisCooler = false;
        @relaisHeater = false;
    end
@@ -25,23 +26,31 @@ class Thermos
    end
 
    def reset_leds
-       @red = false
-       @green = false
-       @blue = false
+       @red = 0.0
+       @green = 0.0
+       @blue = 0.0
    end
 
    def set_leds
        if(@temperature < (@target - @range))
-           @blue = true
+           multiplier = ( (@target - @temperature) / (5 * @range)) #5 times the range from the target is very blue
+           multiplier > 1 ? multiplier = 1 : multiplier = multiplier
+           @blue = 255*multiplier
+
            @relaisHeater = true;
            @relaisCooler = false;
 
        elsif(@temperature > (@target + @range))
-           @red = true
+           multiplier = ( (@temperature - @target) / (5 * @range)) #5 times the range from the target is very red
+           multiplier > 1 ? multiplier = 1 : multiplier = multiplier
+           @red = 255*multiplier
+
            @relaisHeater = false;
            @relaisCooler = true;
        else
-           @green = true
+           multiplier = ((@temperature - @target).abs  / @range ) #0 time the range from the target is very green
+           @green = 255*(1-multiplier)
+
            @relaisHeater = false;
            @relaisCooler = false;
        end
@@ -56,5 +65,9 @@ class Thermos
          tempCelsius = temperature
       end
       tempCelsius
+   end
+
+   def get_hex_leds
+       "#%06x" % [(@red*65536 + @green*256 + @blue).to_i]
    end
 end
