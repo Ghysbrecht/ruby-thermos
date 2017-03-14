@@ -1,9 +1,11 @@
 require_relative "thermos.rb"
 require_relative "Httpsvalue.rb"
 require "OpenSSL"
+require 'json'
 
 
 def get_status(nest)
+    puts "----------------------------------------------------------------------------------------"
     puts "+-------------------------+"
     puts "|       Led Status        |"
     puts "+-------------------------+"
@@ -32,4 +34,8 @@ get_status(nest)
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE #Bypass the SSL certificate problem, but gives a warning :(
 httpsvalue = Httpsvalue.new
 nest.set_temperature(httpsvalue.get_value("https://labict.be/software-engineering/temperature/api/temperature/fake").to_f)
+get_status(nest)
+
+#Get a temperature from a Json file
+nest.set_temperature(JSON.parse(File.read('test.json'))["temperature"].to_f)
 get_status(nest)
