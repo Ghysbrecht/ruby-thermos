@@ -2,11 +2,16 @@ require_relative "thermos.rb"
 require_relative "httpsvalue.rb"
 require_relative "logger.rb"
 require_relative "status.rb"
+require_relative "mqtttemp.rb"
 require "OpenSSL"
 require 'json'
+require 'rubygems'
 
-logger = Logger.new()
+
+
+logger = ThermoLogger.new()
 status = Status.new()
+mqtttemp = Mqtttemp.new("mqtt.labict.be")
 
 
 #Get a termperature from the console arguments
@@ -28,3 +33,16 @@ logger.log_event(nest)
 nest.set_temperature(JSON.parse(File.read('test.json'))["temperature"].to_f)
 status.get_status(nest)
 logger.log_event(nest)
+
+#Get the temperature from a Json file
+
+mqtttemp.on_change do |temp|
+    nest.set_temperature(temp);
+    status.get_status(nest);
+    logger.log_event(nest);
+end
+mqtttemp.enable_thread("softwareengineering/temperature/mbed");
+
+
+while(true)
+end

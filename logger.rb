@@ -1,6 +1,7 @@
 require 'date'
 
-class Logger
+class ThermoLogger
+
     def log_message(message)
         open('log.txt', 'a') do |f|
           f.puts message
