@@ -69,7 +69,7 @@ class Thermos
    end
 
    def get_hex_leds
-       "#%06x" % [(@red*65536 + @green*256 + @blue).to_i]
+       "%02x%02x%02x" % [@red,@green,@blue]
    end
 
 end

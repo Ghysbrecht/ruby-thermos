@@ -40,8 +40,10 @@ mqtttemp.on_change do |temp|
     nest.set_temperature(temp);
     status.get_status(nest);
     logger.log_event(nest);
+    mqtttemp.send_led_hex(nest.get_hex_leds);
+
 end
-mqtttemp.enable_thread("softwareengineering/temperature/mbed");
+mqtttemp.enable_thread("softwareengineering/thermostat/thomas/temperature");
 
 
 while(true)
