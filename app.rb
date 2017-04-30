@@ -3,48 +3,60 @@ require_relative "httpsvalue.rb"
 require_relative "logger.rb"
 require_relative "status.rb"
 require_relative "mqtttemp.rb"
+require_relative "parser.rb"
 require "OpenSSL"
 require 'json'
 require 'rubygems'
 
-
+parser_var = Parser.new
+options = parser_var.parse(ARGV)
 
 logger = ThermoLogger.new()
 status = Status.new()
-mqtttemp = Mqtttemp.new("mqtt.labict.be")
 
+if(options.mqtt)
+    mqtttemp = Mqtttemp.new(options.mqtt)
+end
+
+nest = Thermos.new(options.target.to_f, options.range.to_f)
 
 #Get a termperature from the console arguments
-nest = Thermos.new(ARGV[0].to_f, ARGV[1].to_f)
-nest.set_temperature(ARGV[2].to_f)
-status.get_status(nest)
-logger.log_event(nest)
+if(options.kelvin || options.celcius || options.fahrenheit)
+    nest.set_kelvin(options.kelvin.to_f) if options.kelvin
+    nest.set_celcius(options.celcius.to_f) if options.celcius
+    nest.set_fahrenheit(options.fahrenheit.to_f) if options.fahrenheit
+    status.get_status(nest)
+    logger.log_event(nest)
+end
 
 
 #Get a temperature from the internet
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE #Bypass the SSL certificate problem, but gives a warning :(
-httpsvalue = Httpsvalue.new
-nest.set_temperature(httpsvalue.get_value("https://labict.be/software-engineering/temperature/api/temperature/fake").to_f)
-status.get_status(nest)
-logger.log_event(nest)
-
+if(options.httplink)
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE #Bypass the SSL certificate problem, but gives a warning :(
+    httpsvalue = Httpsvalue.new
+    nest.set_celcius(httpsvalue.get_value(options.httplink).to_f)
+    status.get_status(nest)
+    logger.log_event(nest)
+end
 
 #Get a temperature from a Json file
-nest.set_temperature(JSON.parse(File.read('test.json'))["temperature"].to_f)
-status.get_status(nest)
-logger.log_event(nest)
-
-#Get the temperature from a Json file
-
-mqtttemp.on_change do |temp|
-    nest.set_temperature(temp);
-    status.get_status(nest);
-    logger.log_event(nest);
-    mqtttemp.send_led_hex(nest.get_hex_leds);
-
+if(options.json)
+    nest.set_celcius(JSON.parse(File.read(options.json))["temperature"].to_f)
+    status.get_status(nest)
+    logger.log_event(nest)
 end
-mqtttemp.enable_thread("softwareengineering/thermostat/thomas/temperature");
 
+#Get the temperature from MQTT
+if(options.subscribe)
+    mqtttemp.on_change do |temp|
+        nest.set_celcius(temp);
+        status.get_status(nest);
+        logger.log_event(nest);
+        mqtttemp.send_led_hex(nest.get_hex_leds);
+    end
 
-while(true)
+    mqtttemp.enable_thread(options.subscribe);
+
+    while(true)
+    end
 end

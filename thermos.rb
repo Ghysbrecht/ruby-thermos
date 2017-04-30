@@ -13,15 +13,27 @@ class Thermos
 
 
    def initialize(target, range)
-       @target = get_celcius(target)
+       @target = target
        @range = range
        reset_leds
        @relaisCooler = false;
        @relaisHeater = false;
    end
 
-   def set_temperature (temperature)
-       @temperature = get_celcius(temperature)
+   def set_celcius (temperature)
+       @temperature = temperature
+       reset_leds
+       set_leds
+   end
+
+   def set_kelvin (temperature)
+       @temperature = temperature - 273.15
+       reset_leds
+       set_leds
+   end
+
+   def set_fahrenheit (temperature)
+       @temperature = (temperature - 32)/1.8
        reset_leds
        set_leds
    end
@@ -55,17 +67,6 @@ class Thermos
            @relaisHeater = false;
            @relaisCooler = false;
        end
-   end
-
-   def get_celcius(temperature)
-      if(temperature > 200)
-         tempCelsius = temperature - 273.15
-     elsif(temperature > 40)
-         tempCelsius = (temperature - 32)/1.8
-      else
-         tempCelsius = temperature
-      end
-      tempCelsius
    end
 
    def get_hex_leds
