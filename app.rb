@@ -52,7 +52,7 @@ if(options.subscribe)
         nest.set_celcius(temp);
         status.get_status(nest);
         logger.log_event(nest);
-        mqtttemp.send_led_hex(nest.get_hex_leds);
+        mqtttemp.send_led_hex(nest.get_hex_leds, options.publish) if options.publish
     end
 
     mqtttemp.enable_thread(options.subscribe);

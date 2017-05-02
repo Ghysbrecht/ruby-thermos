@@ -1,6 +1,6 @@
 require 'optparse'
 
-Options = Struct.new(:kelvin, :celcius, :target, :fahrenheit, :range, :httplink, :mqtt, :json, :subscribe )
+Options = Struct.new(:kelvin, :celcius, :target, :fahrenheit, :range, :httplink, :mqtt, :json, :subscribe, :publish )
 
 class Parser
   def parse(options)
@@ -39,6 +39,10 @@ class Parser
 
       opts.on("-s", "--subscribe=NAME", "Subscribe to MQTT channel (broker link mandatory)") do |arg|
         args.subscribe = arg
+      end
+
+      opts.on("-p", "--publish=NAME", "Publish to MQTT channel (broker link mandatory)") do |arg|
+        args.publish = arg
       end
 
       opts.on("-j", "--json=FILENAME", "Use a JSON file for the temperature") do |arg|

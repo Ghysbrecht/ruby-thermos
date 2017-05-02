@@ -31,10 +31,10 @@ class Mqtttemp
       return false
   end
 
-  def send_led_hex(hex)
+  def send_led_hex(hex, topic)
       MQTT::Client.connect(@server) do |c|
            data = '{"color":"'+ hex +'"}'
-          c.publish('softwareengineering/thermostat/thomas/led', data)
+          c.publish(topic, data)
       end
   end
 
