@@ -9,23 +9,23 @@ class Parser
     opt_parser = OptionParser.new do |opts|
       opts.banner = "Usage: app.rb [options]"
 
-      opts.on("-K", "--Kelvin=TEMP", "Temperature in Kelvin") do |arg|
+      opts.on("-K", "--Kelvin=TEMP",Float, "Temperature in Kelvin") do |arg|
         args.kelvin = arg
       end
 
-      opts.on("-C", "--Celcius=TEMP", "Temperature in Celcius") do |arg|
+      opts.on("-C", "--Celcius=TEMP",Float, "Temperature in Celcius") do |arg|
         args.celcius = arg
       end
 
-      opts.on("-F", "--Fahrenheit=TEMP", "Temperature in Fahrenheit") do |arg|
+      opts.on("-F", "--Fahrenheit=TEMP",Float, "Temperature in Fahrenheit") do |arg|
         args.fahrenheit = arg
       end
 
-      opts.on("-t", "--target=TEMP", "Target temperature") do |arg|
+      opts.on("-t", "--target=TEMP",Float, "Target temperature") do |arg|
         args.target = arg
       end
 
-      opts.on("-r", "--range=TEMP", "Range for temperature") do |arg|
+      opts.on("-r", "--range=TEMP",Float, "Range for temperature") do |arg|
         args.range = arg
       end
 
@@ -52,6 +52,10 @@ class Parser
     end
 
     opt_parser.parse!(options)
+
+    raise OptionParser::MissingArgument if args.range.nil?
+    raise OptionParser::MissingArgument if args.target.nil?
+
     return args
   end
 end

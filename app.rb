@@ -18,13 +18,13 @@ if(options.mqtt)
     mqtttemp = Mqtttemp.new(options.mqtt)
 end
 
-nest = Thermos.new(options.target.to_f, options.range.to_f)
+nest = Thermos.new(options.target, options.range)
 
 #Get a termperature from the console arguments
 if(options.kelvin || options.celcius || options.fahrenheit)
-    nest.set_kelvin(options.kelvin.to_f) if options.kelvin
-    nest.set_celcius(options.celcius.to_f) if options.celcius
-    nest.set_fahrenheit(options.fahrenheit.to_f) if options.fahrenheit
+    nest.set_kelvin(options.kelvin) if options.kelvin
+    nest.set_celcius(options.celcius) if options.celcius
+    nest.set_fahrenheit(options.fahrenheit) if options.fahrenheit
     status.get_status(nest)
     logger.log_event(nest)
 end
