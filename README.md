@@ -38,7 +38,7 @@ Usage: app.rb [options]
 The temperature can be passed on in Kelvin.
 
 ```
-ruby app.rb -t 27.4 -r 1 -K 301
+thermostat -t 27.4 -r 1 -K 301
 ```
 ***
 
@@ -47,7 +47,7 @@ ruby app.rb -t 27.4 -r 1 -K 301
 The temperature can be passed on in Celcius.
 
 ```
-ruby app.rb -t 27.4 -r 1 -C 23.9
+thermostat -t 27.4 -r 1 -C 23.9
 ```
 ***
 
@@ -57,7 +57,7 @@ The temperature can be passed on in Fahrenheit.
 
 
 ```
-ruby app.rb -t 27.4 -r 1 -F 80.7
+thermostat -t 27.4 -r 1 -F 80.7
 ```
 ***
 
@@ -67,7 +67,7 @@ The temperature can be passed on by providing a link where the app can get a tem
 
 
 ```
-ruby app.rb -t 27.4 -r 1 -H "https://labict.be/software-engineering/temperature/api/temperature/fake"
+thermostat -t 27.4 -r 1 -H "https://labict.be/software-engineering/temperature/api/temperature/fake"
 ```
 ***
 
@@ -76,7 +76,7 @@ ruby app.rb -t 27.4 -r 1 -H "https://labict.be/software-engineering/temperature/
 The temperature can be passed on via MQTT. A broker link and a topic to subscibe to must be given with the arguments.
 
 ```
-ruby app.rb -t 27.4 -r 1 -m "mqtt.site.be" -s "topic/temperature"
+thermostat -t 27.4 -r 1 -m "mqtt.site.be" -s "topic/temperature"
 ```
 ***
 
@@ -91,7 +91,7 @@ The temperature can be passed on via a JSON file. This file must follow this for
 ```
 
 ```
-ruby app.rb -t 27.4 -r 1 -j "test.json"
+thermostat -t 27.4 -r 1 -j "test.json"
 ```
 ***
 

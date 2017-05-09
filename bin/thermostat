@@ -1,9 +1,11 @@
-require_relative "thermos.rb"
-require_relative "httpsvalue.rb"
-require_relative "logger.rb"
-require_relative "status.rb"
-require_relative "mqtttemp.rb"
-require_relative "parser.rb"
+#!/usr/bin/env ruby
+
+require_relative "../lib/thermos.rb"
+require_relative "../lib/httpsvalue.rb"
+require_relative "../lib/logger.rb"
+require_relative "../lib/status.rb"
+require_relative "../lib/mqtttemp.rb"
+require_relative "../lib/parser.rb"
 require "OpenSSL"
 require 'json'
 require 'rubygems'
