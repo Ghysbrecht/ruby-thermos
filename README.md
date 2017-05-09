@@ -1,8 +1,19 @@
-# Optparse
+# Thermostat in Ruby:
 
-***
+![Project logo](logo.jpg)
 
-#### In this ruby program I use "optparse" to easily pass values to the program. This way it will also be easier later one when this app becomes a program on itself.
+## What does this do?
+
+With this app you can visualize a thermostat system that turns a relay on or off depending on the temperature. It also shows the temperature in relation to the given target and range using a RGB led.
+
+## Installing the app.
+
+You will need ruby and get the gem via this command.
+```
+gem install thomas-ghysbrecht-thermostat-exercise
+```
+
+## How to use it.
 
 The app requires 3 key values to be able to run. A target, range and temperature. It is already possible to pass on that last one via different ways. This is a print out of '-h'.
 
@@ -22,62 +33,54 @@ Usage: app.rb [options]
 
 ***
 
-## Kelvin temperature:
+#### Kelvin temperature:
 
-The temperature can be passed on in kelvin.
-
-#### Syntax
+The temperature can be passed on in Kelvin.
 
 ```
 ruby app.rb -t 27.4 -r 1 -K 301
 ```
 ***
 
-## Celcius temperature:
+#### Celcius temperature:
 
 The temperature can be passed on in Celcius.
-
-#### Syntax
 
 ```
 ruby app.rb -t 27.4 -r 1 -C 23.9
 ```
 ***
 
-## Fahrenheit temperature:
+#### Fahrenheit temperature:
 
 The temperature can be passed on in Fahrenheit.
 
-#### Syntax
 
 ```
 ruby app.rb -t 27.4 -r 1 -F 80.7
 ```
 ***
 
-## HTTP temperature:
+#### HTTP temperature:
 
 The temperature can be passed on by providing a link where the app can get a temperature.
 
-#### Syntax
 
 ```
 ruby app.rb -t 27.4 -r 1 -H "https://labict.be/software-engineering/temperature/api/temperature/fake"
 ```
 ***
 
-## MQTT temperature:
+#### MQTT temperature:
 
 The temperature can be passed on via MQTT. A broker link and a topic to subscibe to must be given with the arguments.
-
-#### Syntax
 
 ```
 ruby app.rb -t 27.4 -r 1 -m "mqtt.site.be" -s "topic/temperature"
 ```
 ***
 
-## JSON temperature:
+#### JSON temperature:
 
 The temperature can be passed on via a JSON file. This file must follow this format.
 
@@ -87,19 +90,23 @@ The temperature can be passed on via a JSON file. This file must follow this for
 }
 ```
 
-#### Syntax
-
 ```
 ruby app.rb -t 27.4 -r 1 -j "test.json"
 ```
 ***
 
-## Optparse code:
+## License
 
-Optparse makes it easy to add a option to the app. This is the code for the -K option.
+Distributed under the [MIT](https://opensource.org/licenses/MIT) license.
 
-```ruby
-opts.on("-K", "--Kelvin=TEMP", "Temperature in Kelvin") do |arg|
-  args.kelvin = arg
-end
-```
+## Contact
+
+Thomas Ghysbrecht - [@snoopymonster](https://twitter.com/snoopymonster)
+
+## Contributing
+
+1. Fork it (<https://github.com/yourname/yourproject/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
